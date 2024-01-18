@@ -260,7 +260,7 @@ public class CarController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void MoveCar(int w, int s, int a, int d)
+    public void MoveCar(int w, int s, int a, int d)
     {
 
       //CAR DATA
@@ -294,6 +294,13 @@ public class CarController : MonoBehaviour
       // We call the method AnimateWheelMeshes() in order to match the wheel collider movements with the 3D meshes of the wheels.
       AnimateWheelMeshes();
     }
+
+    public float GetSpeed()
+    {
+        return carSpeed / maxSpeed;
+    }
+
+
 
     // This method converts the car speed data from float to string, and then set the text of the UI carSpeedText with this value.
     public void CarSpeedUI(){
