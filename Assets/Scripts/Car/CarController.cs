@@ -285,7 +285,7 @@ public class CarController : MonoBehaviour
       if(d == 1){
         TurnRight();
       }
-      if(s == 0 && w == 1){
+      if(s == 0 && w == 0){
         ThrottleOff();
       }
       if(a == 0 && d == 0 && steeringAxis != 0f){

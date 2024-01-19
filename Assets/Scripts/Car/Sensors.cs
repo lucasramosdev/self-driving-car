@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Sensors : MonoBehaviour
 {
+    [HideInInspector]
     public float[] sensors;
     private int numberSensors;
 
