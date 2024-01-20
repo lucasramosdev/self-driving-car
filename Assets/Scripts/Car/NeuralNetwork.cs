@@ -113,7 +113,6 @@ public class NeuralNetwork : MonoBehaviour
         for (int i = 0; i < layer.ColumnCount; i++)
         {
             output[i] = layer[0,i];
-            neurons.Add(layer[0, i]);
         }
         return output;
     }
