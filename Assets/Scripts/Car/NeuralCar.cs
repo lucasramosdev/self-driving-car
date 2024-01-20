@@ -24,8 +24,8 @@ public class NeuralCar : MonoBehaviour
 
     void Start()
     {
-        sensorsController.SetSensorsLength(12);
-        network.Initialise(1, 4, 13, 4);
+        sensorsController.SetSensorsLength(13);
+        network.Initialise(1, 4, 14, 4);
         network.RandomiseVariables();
     }
     void Update()

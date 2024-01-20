@@ -19,9 +19,10 @@ public class Sensors : MonoBehaviour
         sensors = new float[numberSensors];
         int layerMask = LayerMask.GetMask("UnWalkable");
         float maxAngle = 180f;
+        int angleStep = (int)(maxAngle / (numberSensors - 1));
         float initialAngle = -90F;
-        float angleStep = maxAngle/sensors.Length;
         float sensorLength = 30;
+        Vector3 offset = new Vector3(0, 1, 0);
         for(int i = 0; i < sensors.Length; i++)
         {
             float angle = initialAngle + (i * angleStep);
@@ -33,12 +34,12 @@ public class Sensors : MonoBehaviour
             {
                 float sensor = sensorLength - hit.distance;
                 sensors[i] = sensor;
-                Debug.DrawRay(transform.position, direction * hit.distance, Color.red);
+                Debug.DrawRay(transform.position + offset, direction * hit.distance, Color.red);
             }
             else
             {
                 sensors[i] = 0;
-                Debug.DrawRay(transform.position, direction * sensorLength, Color.green);
+                Debug.DrawRay(transform.position + offset, direction * sensorLength, Color.green);
             }
         }
         sensors = NormalizeData(sensors);
