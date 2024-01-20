@@ -7,9 +7,14 @@ public class NeuralCar : MonoBehaviour
 {
     [SerializeField] CarController controller;
     [SerializeField] Sensors sensorsController;
+    [SerializeField] NeuralNetwork network;
     public float[] sensors;
     [Header("Configurations")]
     public bool testing;
+
+    [Header("Neural Network")]
+    public float fitness;
+    public List<float> neurons = new List<float>();
 
     [Header("Results")]
     public int w;
@@ -20,11 +25,13 @@ public class NeuralCar : MonoBehaviour
     void Start()
     {
         sensorsController.SetSensorsLength(12);
+        network.Initialise(1, 4, 13, 4);
+        network.RandomiseVariables();
     }
     void Update()
     {
         GetSensors();
-
+        GetNetworkResult();
         if(testing)
         {
             KeyboardMoviment();    
@@ -42,11 +49,11 @@ public class NeuralCar : MonoBehaviour
 
     void KeyboardMoviment()
     {
-        w = Input.GetKey(KeyCode.W) == true ? 1 : 0;
-        s = Input.GetKey(KeyCode.S) == true ? 1 : 0;
-        a = Input.GetKey(KeyCode.A) == true ? 1 : 0;
-        d = Input.GetKey(KeyCode.D) == true ? 1 : 0;
-        controller.MoveCar(w, s, a, d);
+        int humanW = Input.GetKey(KeyCode.W) == true ? 1 : 0;
+        int humanS = Input.GetKey(KeyCode.S) == true ? 1 : 0;
+        int humanA = Input.GetKey(KeyCode.A) == true ? 1 : 0;
+        int humanD = Input.GetKey(KeyCode.D) == true ? 1 : 0;
+        controller.MoveCar(humanW, humanS, humanA, humanD);
     }
 
     void GetSensors()
@@ -56,5 +63,11 @@ public class NeuralCar : MonoBehaviour
         sensors = new float[spacialSensors.Length + 1];
         spacialSensors.CopyTo(sensors, 0);
         sensors[sensors.Length - 1] = speedSensor;
+    }
+
+    void GetNetworkResult()
+    {
+        neurons = network.GetNeurons();
+        (w, s, a, d) = network.RunNetwork(sensors);
     }
 }

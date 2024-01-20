@@ -47,6 +47,8 @@ public class Sensors : MonoBehaviour
 
     private float[] NormalizeData(float[] sensors)
     {
+        float floor = .1f;
+
         float min = sensors.Min();
         float max = sensors.Max();
 
@@ -55,6 +57,7 @@ public class Sensors : MonoBehaviour
         for(int i = 0; i < sensors.Length; i++)
         {
             float sensorNormalized = (sensors[i] - min) / (max - min);
+            if(sensorNormalized < floor) sensorNormalized = 0f;
             normalized[i] = sensorNormalized;
         }
 

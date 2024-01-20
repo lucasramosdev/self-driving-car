@@ -297,7 +297,10 @@ public class CarController : MonoBehaviour
 
     public float GetSpeed()
     {
-        return carSpeed / maxSpeed;
+        float floor = .05f;
+        float speedSensor = carSpeed / maxSpeed;
+        if(Mathf.Abs(speedSensor) < floor) speedSensor = 0f;
+        return speedSensor;
     }
 
 

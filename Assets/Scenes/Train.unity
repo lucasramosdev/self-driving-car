@@ -1140,6 +1140,7 @@ GameObject:
   - component: {fileID: 5550926644157822015}
   - component: {fileID: 5550926644157822014}
   - component: {fileID: 5550926644157822016}
+  - component: {fileID: 5550926644157822017}
   m_Layer: 0
   m_Name: Prometheus
   m_TagString: Untagged
@@ -1236,8 +1237,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 5550926644157822014}
   sensorsController: {fileID: 5550926644157822016}
+  network: {fileID: 5550926644157822017}
   sensors: []
   testing: 1
+  fitness: 0
+  neurons: []
   w: 0
   s: 0
   a: 0
@@ -1255,6 +1259,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensors: []
+--- !u!114 &5550926644157822017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5062902449014533767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38c57be1a7dddbd408c10f94e1e8a194, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5668580047593987109
 Transform:
   m_ObjectHideFlags: 0
