@@ -10,10 +10,9 @@ public class NeuralNetwork : MonoBehaviour
     int[] outputLayer;
     Matrix<float> inputLayer;
     List<Matrix<float>> hiddenLayers = new List<Matrix<float>>();
-    List<Matrix<float>> weights = new List<Matrix<float>>();
-    List<Matrix<float>> biases = new List<Matrix<float>>();
-
     List<float> neurons = new List<float>();
+    public List<Matrix<float>> weights = new List<Matrix<float>>();
+    public List<Matrix<float>> biases = new List<Matrix<float>>();
 
     public void Initialise(int hiddenLayersCount, int hiddenNeuronsCount, int sensorsCount, int outputNeuronsCount)
     {
@@ -39,12 +38,97 @@ public class NeuralNetwork : MonoBehaviour
         weights.Add(weightBias);
     }
 
+    public void InitialiseCopy(NeuralNetwork parent, int layers, int neurons)
+    {
+        List<Matrix<float>> newWeights = new List<Matrix<float>>();
+        List<Matrix<float>> newBiases = new List<Matrix<float>>();
+
+        for(int i = 0; i < parent.weights.Count; i++)
+        {
+            Matrix<float> currentWeight = Matrix<float>.Build.Dense(parent.weights[i].RowCount, parent.weights[i].ColumnCount);
+            for(int x = 0; x < currentWeight.RowCount; x++)
+            {
+                for(int y = 0; y < currentWeight.ColumnCount; y++)
+                {
+                    currentWeight[x, y] = parent.weights[i][x, y];
+                }
+            }
+            newWeights.Add(currentWeight);
+        }
+
+        for(int i = 0; i < parent.biases.Count; i++)
+        {
+            Matrix<float> currentBias = Matrix<float>.Build.Dense(parent.biases[i].RowCount, parent.biases[i].ColumnCount);
+            for(int x = 0; x < currentBias.RowCount; x++)
+            {
+                for(int y = 0; y < currentBias.ColumnCount; y++)
+                {
+                    currentBias[x, y] = parent.biases[i][x, y];
+                }
+            }
+            newBiases.Add(currentBias);
+        }
+
+        biases = newBiases;
+        weights = newWeights;
+        InitialiseHidden(layers, neurons);
+    }
+
+    public NeuralNetwork CopyNetwork(int hiddenLayers, int hiddenNeurons)
+    {
+        NeuralNetwork copyNetwork = new NeuralNetwork();
+        List<Matrix<float>> newWeights = new List<Matrix<float>>();
+        List<Matrix<float>> newBiases = new List<Matrix<float>>();
+
+        for(int i = 0; i < weights.Count; i++)
+        {
+            Matrix<float> currentWeight = Matrix<float>.Build.Dense(weights[i].RowCount, weights[i].ColumnCount);
+            for(int x = 0; x < currentWeight.RowCount; x++)
+            {
+                for(int y = 0; y < currentWeight.ColumnCount; y++)
+                {
+                    currentWeight[x, y] = weights[i][x, y];
+                }
+            }
+            newWeights.Add(currentWeight);
+        }
+
+        for(int i = 0; i < biases.Count; i++)
+        {
+            Matrix<float> currentBias = Matrix<float>.Build.Dense(biases[i].RowCount, biases[i].ColumnCount);
+            for(int x = 0; x < currentBias.RowCount; x++)
+            {
+                for(int y = 0; y < currentBias.ColumnCount; y++)
+                {
+                    currentBias[x, y] = biases[i][x, y];
+                }
+            }
+            newBiases.Add(currentBias);
+        }
+
+        copyNetwork.biases = newBiases;
+        copyNetwork.weights = newWeights;
+        copyNetwork.InitialiseHidden(hiddenLayers, hiddenNeurons);
+        return copyNetwork;
+    }
+
+    private void InitialiseHidden(int hiddenLayerCount, int hiddenNeuronCount)
+    {
+        hiddenLayers.Clear();
+
+        for (int i = 0; i < hiddenLayerCount; i ++)
+        {
+            Matrix<float> newHiddenLayer = Matrix<float>.Build.Dense(1, hiddenNeuronCount);
+            hiddenLayers.Add(newHiddenLayer);
+        }
+    }
+
     public void RandomiseVariables()
     {
         Randomise(weights);
         Randomise(biases);
     }
-    public void Randomise(List<Matrix<float>> matrix)
+    private void Randomise(List<Matrix<float>> matrix)
     {
 
         for (int i = 0; i < matrix.Count; i++)
