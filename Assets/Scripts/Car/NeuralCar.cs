@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NeuralCar : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class NeuralCar : MonoBehaviour
     [SerializeField] Sensors sensorsController;
     [SerializeField] NeuralNetwork network;
     [SerializeField] Rigidbody rigidBody;
+    GeneticManager manager;
     bool moviment = false;
     public float[] sensors;
     [Header("Configurations")]
@@ -26,24 +28,38 @@ public class NeuralCar : MonoBehaviour
 
     void Awake()
     {
+        manager = GameObject.FindObjectOfType<GeneticManager>();
         if(!testing)
         {
             rigidBody.constraints = RigidbodyConstraints.FreezeAll;
         }
     }
-    
+
     void FixedUpdate()
     {
-        GetSensors();
-        GetNetworkResult();
         if(testing)
         {
+            GetSensors();
+            GetNetworkResult();
             KeyboardMoviment();    
             return;
         }
+        if(moviment)
+        {
+            GetSensors();
+            GetNetworkResult();
+            NeuralMoviment();   
+        }
 
-        NeuralMoviment();
+    }
 
+    
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Wall" && moviment)
+        {
+            Death();
+        }
     }
 
     public void AllowMoviment()
@@ -62,7 +78,7 @@ public class NeuralCar : MonoBehaviour
 
     void NeuralMoviment()
     {
-        controller.MoveCar(w, s, a, d);
+        controller.MoveCar(w, s, a, d);;
     }
 
     void KeyboardMoviment()
@@ -87,5 +103,12 @@ public class NeuralCar : MonoBehaviour
     {
         neurons = network.GetNeurons();
         (w, s, a, d) = network.RunNetwork(sensors);
+    }
+
+    void Death()
+    {
+        rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+        moviment = false;
+        manager.Death(this);
     }
 }
