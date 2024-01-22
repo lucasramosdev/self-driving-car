@@ -136,7 +136,7 @@ public class CarController : MonoBehaviour
       /*
       IMPORTANT: The following variables should not be modified manually since their values are automatically given via script.
       */
-      Rigidbody carRigidbody; // Stores the car's rigidbody.
+      [SerializeField] Rigidbody carRigidbody; // Stores the car's rigidbody.
       float steeringAxis; // Used to know whether the steering wheel has reached the maximum value. It goes from -1 to 1.
       float throttleAxis; // Used to know whether the throttle has reached the maximum value. It goes from -1 to 1.
       float driftingAxis;

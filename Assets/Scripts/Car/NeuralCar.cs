@@ -8,6 +8,8 @@ public class NeuralCar : MonoBehaviour
     [SerializeField] CarController controller;
     [SerializeField] Sensors sensorsController;
     [SerializeField] NeuralNetwork network;
+    [SerializeField] Rigidbody rigidBody;
+    bool moviment = false;
     public float[] sensors;
     [Header("Configurations")]
     public bool testing;
@@ -22,13 +24,15 @@ public class NeuralCar : MonoBehaviour
     public int a;
     public int d;
 
-    void Start()
+    void Awake()
     {
-        sensorsController.SetSensorsLength(13);
-        network.Initialise(1, 4, 14, 4);
-        network.RandomiseVariables();
+        if(!testing)
+        {
+            rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+        }
     }
-    void Update()
+    
+    void FixedUpdate()
     {
         GetSensors();
         GetNetworkResult();
@@ -42,9 +46,23 @@ public class NeuralCar : MonoBehaviour
 
     }
 
+    public void AllowMoviment()
+    {
+        if(moviment == false)
+        {
+            rigidBody.constraints = RigidbodyConstraints.None;
+            moviment = true;
+        }
+    }
+
+    public void SetFitness(int value)
+    {
+        fitness = value;
+    }
+
     void NeuralMoviment()
     {
-
+        controller.MoveCar(w, s, a, d);
     }
 
     void KeyboardMoviment()
