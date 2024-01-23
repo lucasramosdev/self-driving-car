@@ -794,7 +794,7 @@ MonoBehaviour:
   carManager: {fileID: 1710741456}
   trackGrid: {fileID: 1734827096}
   deathLaser: {fileID: 647047538}
-  initialPopulation: 85
+  initialPopulation: 150
   mutationRate: 0.055
   bestAgentSelection: 8
   worstAgentSelection: 3

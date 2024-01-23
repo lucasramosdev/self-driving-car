@@ -6,12 +6,11 @@ using UnityEngine;
 public class GeneticPool : MonoBehaviour
 {
     private List<int> genePool = new List<int>();
-    public int naturallySelected;
+    public int naturallySelected = 0;
 
     public void Clear()
     {
         genePool.Clear();
-        naturallySelected = 0;
     }
 
     public int GetLength()

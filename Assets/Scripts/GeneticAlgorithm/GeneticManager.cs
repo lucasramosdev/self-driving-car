@@ -190,6 +190,7 @@ public class GeneticManager : MonoBehaviour
     void ResetGeneration(GameObject[] newPopulation)
     {
         population = newPopulation;
+        geneticPool.naturallySelected = 0;
         collisedCars = 0;
         currentGeneration++;
         currentGenerationTime = 0f;
