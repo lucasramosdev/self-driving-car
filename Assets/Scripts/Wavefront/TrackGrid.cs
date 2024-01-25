@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -54,6 +55,26 @@ public class TrackGrid : MonoBehaviour
         int y = Mathf.RoundToInt((gridSizeY-1) * percentY);
 
         return grid[x,y];
+    }
+
+    public Node GetGoalNode(Vector3 position)
+    {
+        Node node = NodeFromWorldPoint(position);
+        if(node.value == -1){
+        List<Node> neighbours = new List<Node>();
+        CheckNode(node.gridX, node.gridY-1, neighbours);
+        CheckNode(node.gridX, node.gridY+1, neighbours);
+        CheckNode(node.gridX-1, node.gridY, neighbours);
+        CheckNode(node.gridX+1, node.gridY, neighbours);
+        return neighbours[0];
+        }
+        return node;
+    }
+
+    void CheckNode(int x, int y, List<Node> nodes)
+    {
+        Node node = grid[x, y];
+        if(node.value != -1) nodes.Add(node); 
     }
 
     void PropageteWavefront()

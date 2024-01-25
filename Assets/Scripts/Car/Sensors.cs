@@ -17,7 +17,7 @@ public class Sensors : MonoBehaviour
     public float[] GetInput()
     {
         sensors = new float[numberSensors];
-        int layerMask = LayerMask.GetMask("UnWalkable");
+        int layerMask = LayerMask.GetMask("Wall");
         float maxAngle = 180f;
         int angleStep = (int)(maxAngle / (numberSensors - 1));
         float initialAngle = -90F;

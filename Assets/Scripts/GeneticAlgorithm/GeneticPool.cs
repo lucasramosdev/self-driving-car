@@ -71,7 +71,7 @@ public class GeneticPool : MonoBehaviour
 
     public Matrix<float> MutateMatrix(Matrix<float> matrix)
     {   
-        int maxRandomPoints = matrix.RowCount * matrix.ColumnCount / 7;
+        int maxRandomPoints = matrix.RowCount * matrix.ColumnCount / (matrix.ColumnCount / 2);
         int randomPoints = Random.Range(0, maxRandomPoints);
         float min = -1f;
         float max = 1f;

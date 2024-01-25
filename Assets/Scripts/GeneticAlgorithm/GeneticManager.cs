@@ -77,7 +77,7 @@ public class GeneticManager : MonoBehaviour
     void CalculateFitness(NeuralCar neuralCar)
     {
         Vector3 carPosition = neuralCar.GetComponent<Transform>().position;
-        Node node = trackGrid.NodeFromWorldPoint(carPosition);
+        Node node = trackGrid.GetGoalNode(carPosition);
         neuralCar.SetFitness(node.value);
     }
 
@@ -132,7 +132,7 @@ public class GeneticManager : MonoBehaviour
             int last = population.Length - 1;
             last -= i;
 
-            int quantity = Mathf.RoundToInt(worstAgentSelection / (i + 1) / 2);
+            int quantity = Mathf.RoundToInt(worstAgentSelection / (i + 1));
             geneticPool.Add(last, quantity);
 
         }
